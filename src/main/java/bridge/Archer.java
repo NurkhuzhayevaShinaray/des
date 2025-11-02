@@ -7,7 +7,7 @@ public class Archer implements HeroType{
     }
     @Override
     public int getBaseHealth() {
-        return 85;
+        return 125;
     }
     @Override
     public int getBonusDamage() {

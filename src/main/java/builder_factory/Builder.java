@@ -1,4 +1,4 @@
-package builder;
+package builder_factory;
 import bridge.Hero;
 import bridge.HeroType;
 import bridge.*;
@@ -13,6 +13,9 @@ public class Builder implements IHeroBuilder {
     private int health;
     private int maxHealth;
     private final List<GameObserver> observers = new ArrayList<>();
+    private String customAbility;
+
+
 
     @Override
     public IHeroBuilder setName(String name) {
@@ -47,9 +50,16 @@ public class Builder implements IHeroBuilder {
     }
 
     @Override
+    public IHeroBuilder setCustomAbility(String ability) {
+        this.customAbility = ability;
+        return this;
+    }
+
+    @Override
     public Hero build() {
         validateBuild();
-        Hero hero = createHeroByName(name, heroType);
+        CustomizedHero hero = new CustomizedHero(name, heroType);
+        hero.setCustomAbility(customAbility);
         applyCustomizations(hero);
         return hero;
     }
@@ -60,30 +70,6 @@ public class Builder implements IHeroBuilder {
         }
     }
 
-    private Hero createHeroByName(String characterName, HeroType heroType) {
-        switch(characterName.toLowerCase()) {
-            case "scorpion":
-                return new Scorpion(heroType);
-            case "subzero":
-                return new SubZero(heroType);
-            case "raiden":
-                return new Raiden(heroType);
-            case "erron black":
-                return new ErronBlack(heroType);
-            case "kitana":
-                return new Kitana(heroType);
-            case "rambo":
-                return new Rambo(heroType);
-            case "shang tsung":
-                return new ShangTsung(heroType);
-            case "sindel":
-                return new Sindel(heroType);
-            case "kano":
-                return new Kano(heroType);
-            default:
-                throw new IllegalArgumentException("Unknown character: " + characterName);
-        }
-    }
 
     private void applyCustomizations(Hero hero) {
         hero.health = health;

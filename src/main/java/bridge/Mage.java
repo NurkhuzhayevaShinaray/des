@@ -9,7 +9,7 @@ public class Mage implements HeroType {
     }
     @Override
     public int getBaseHealth() {
-        return 95;
+        return 155;
     }
     @Override
     public int getBonusDamage() {

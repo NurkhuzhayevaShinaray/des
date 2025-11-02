@@ -7,7 +7,7 @@ public class Warrior implements HeroType{
     }
     @Override
     public int getBaseHealth() {
-        return 130;
+        return 180;
     }
     @Override
     public int getBonusDamage() {

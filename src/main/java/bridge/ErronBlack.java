@@ -5,8 +5,10 @@ public class ErronBlack extends Hero{
         super("Erron Black", heroType);
     }
     @Override
-    public void uniqueAbility() {
+    public void uniqueAbility(Hero target) {
      System.out.println("Erron Black: I've got a bullet for every last one!");
-     notifyObservers("Erron Black shooting..");
+     int damage = 30 + heroType.getBonusDamage();
+     notifyObservers("Erron Black shooting.." + target.getName() + " for "+ damage+ " damage");
+     target.takeDamage(damage);
     }
 }

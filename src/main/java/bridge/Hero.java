@@ -66,10 +66,14 @@ public abstract class Hero {
         }
     }
 
-    public void useSpecialAbility() {
+    public void useSpecialAbility(Hero target) {
         heroType.specialAbility();
         notifyObservers(name + " used special ability");
+        int damage = 25 + heroType.getBonusDamage();
+        notifyObservers(name + " used special ability for "+ damage + " damage");
+        target.takeDamage(damage);
     }
 
-    public abstract void uniqueAbility();
+    public abstract void uniqueAbility(Hero target);
+
 }

@@ -6,8 +6,10 @@ public class SubZero extends Hero{
     }
 
     @Override
-    public void uniqueAbility() {
+    public void uniqueAbility(Hero target) {
         System.out.println("SubZero: Freeze!");
-        notifyObservers("SubZero used freeze attack");
+        int damage= 30+ heroType.getBonusDamage();
+        notifyObservers("SubZero used freeze attack "+ target.getName()+ " for "+ damage+" damage");
+        target.takeDamage(damage);
     }
 }
