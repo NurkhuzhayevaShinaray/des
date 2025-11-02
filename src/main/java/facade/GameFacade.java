@@ -9,15 +9,15 @@ public class GameFacade {
     private Scanner scanner;
 
     public GameFacade() {
-        this.battleManager = new BattleManager();
         this.leaderboard = new Leaderboard();
+        this.battleManager = new BattleManager(leaderboard);
         this.instructions = new Instructions();
         this.practiceMode = new PracticeMode();
         this.scanner = new Scanner(System.in);
     }
 
     public void startGame() {
-        System.out.println("Welcome! Start the game..");
+        System.out.println("Welcome to battle! Start the game!");
         while (true) {
             showMainMenu();
             int choice = getIntInput("Enter your choice (1-5): ", 1, 5);

@@ -2,39 +2,69 @@ package facade;
 import java.util.*;
 
 public class Leaderboard {
-    private Map<String, Integer> leaderboard;
+    private HashMap<String, Integer> leaderboard;
 
     public Leaderboard() {
-        this.leaderboard = new HashMap<>();
-        initializeLeaderboard();
+        leaderboard = new HashMap<String, Integer>();
+        addDefaultHeroes();
     }
 
-    private void initializeLeaderboard() {
-        String[] defaultHeroes = {"SubZero", "Sindel", "Kano", "Erron Black", "Kitana",
-                "Raiden", "Rambo", "Scorpion", "Shang Tsung"};
-        for (String hero : defaultHeroes) {
-            leaderboard.put(hero, 0);
-        }
+    private void addDefaultHeroes() {
+        leaderboard.put("SubZero", 0);
+        leaderboard.put("Sindel", 0);
+        leaderboard.put("Kano", 0);
+        leaderboard.put("Erron Black", 0);
+        leaderboard.put("Kitana", 0);
+        leaderboard.put("Raiden", 0);
+        leaderboard.put("Rambo", 0);
+        leaderboard.put("Scorpion", 0);
+        leaderboard.put("Shang Tsung", 0);
     }
 
     public void updateLeaderboard(String heroName) {
-        leaderboard.put(heroName, leaderboard.getOrDefault(heroName, 0) + 1);
+        boolean heroExists = leaderboard.containsKey(heroName);
+        if (heroExists) {
+            int currentWins = leaderboard.get(heroName);
+            int newWins = currentWins + 1;
+            leaderboard.put(heroName, newWins);
+        } else {
+            leaderboard.put(heroName, 1);
+        }
     }
 
     public void showLeaderboard() {
         System.out.println("Leaderboard");
-        System.out.println("Hero | Wins");
 
-        leaderboard.entrySet().stream()
-                .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
-                .forEach(entry -> {
-                    System.out.printf( entry.getKey(), entry.getValue());
-                });
+
+        String[] allHeroes = leaderboard.keySet().toArray(new String[0]);
+        Integer[] allWins = leaderboard.values().toArray(new Integer[0]);
+
+        for (int i = 0; i < allHeroes.length; i++) {
+            for (int j = i + 1; j < allHeroes.length; j++) {
+                if (allWins[j] > allWins[i]) {
+                    String tempHero = allHeroes[i];
+                    allHeroes[i] = allHeroes[j];
+                    allHeroes[j] = tempHero;
+
+                    // Swap wins
+                    int tempWin = allWins[i];
+                    allWins[i] = allWins[j];
+                    allWins[j] = tempWin;
+                }
+            }
+        }
+
+        for (int i = 0; i < allHeroes.length; i++) {
+            System.out.println(allHeroes[i] + " - " + allWins[i] + " wins");
+        }
     }
 
     public void addCustomHero(String heroName) {
-        if (!leaderboard.containsKey(heroName)) {
+        if (leaderboard.containsKey(heroName)) {
+            System.out.println("Hero '" + heroName + "' already exists!");
+        } else {
             leaderboard.put(heroName, 0);
+            System.out.println("Added new hero: " + heroName);
         }
     }
 }

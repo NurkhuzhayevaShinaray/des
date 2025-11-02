@@ -30,11 +30,9 @@ public class PracticeMode {
     private Hero createPlayerHero() {
         Director director = new Director();
         Hero hero = director.constructHero();
-
         if (hero instanceof CustomizedHero) {
             instructions.addCustomizedHero(hero.getName());
         }
-
         return hero;
     }
 
@@ -118,13 +116,7 @@ public class PracticeMode {
         } else if (attacker.getHealth() < 50) {
             System.out.println("You're low on health! Consider using ranged attacks to maintain distance.");
         } else {
-            String[] tips = {
-                    "Try using melee strategy next for +20 damage!",
-                    "Magic attacks work well against " + defender.getTypeName() + " types!",
-                    "Use your special ability when opponent's health is below 50!",
-                    "Switch to ranged attacks to avoid counter damage!"
-            };
-            System.out.println(tips[random.nextInt(tips.length)]);
+            System.out.println("Other strategy attacks work well against " + defender.getTypeName() + " types!");
         }
     }
 
@@ -156,7 +148,7 @@ public class PracticeMode {
         System.out.println(aiOpponent.getName() + ": " + aiOpponent.getHealth());
 
         if (player.getHealth() > aiOpponent.getHealth()) {
-            System.out.println("Great job! You outperformed the AI!");
+            System.out.println("Great job! You won over the AI!");
         } else if (aiOpponent.getHealth() > player.getHealth()) {
             System.out.println("Good effort! Try different strategies next time.");
         } else {

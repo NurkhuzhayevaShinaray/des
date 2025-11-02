@@ -10,10 +10,10 @@ public class BattleManager {
     private Random random;
     private Leaderboard leaderboard;
 
-    public BattleManager() {
+    public BattleManager(Leaderboard leaderboard) {
         this.scanner = new Scanner(System.in);
         this.random = new Random();
-        this.leaderboard = new Leaderboard();
+        this.leaderboard = leaderboard;
     }
 
     public void startBattleMode() {
@@ -75,21 +75,25 @@ public class BattleManager {
         System.out.println(hero1.getName() + " (" + hero1.getTypeName() + ") vs " + hero2.getName() + " (" + hero2.getTypeName() + ")");
         Hero currentAttacker = hero1;
         Hero currentDefender = hero2;
-
-        for (int round = 1; round <= 5; round++) {
-            System.out.println("Round " + round);
-            if (!currentAttacker.isAlive() || !currentDefender.isAlive()) {
-                break;
-            }
-            showBattleStatus(currentAttacker, currentDefender);
-            if (currentAttacker == hero1 || !isVsAI) {
+        int round = 1;
+        while (hero1.isAlive() && hero2.isAlive()){
+            System.out.println("Round" + round);
+            showBattleStatus(hero1,hero2);
+            if (currentAttacker==hero1 || !isVsAI){
                 playerTurn(currentAttacker, currentDefender);
             } else {
-                aiTurn(currentAttacker, currentDefender);
+                aiTurn(currentAttacker,currentDefender);
             }
+            if (!hero1.isAlive() || !hero2.isAlive()){
+                break;
+            }
+
             Hero temp = currentAttacker;
             currentAttacker = currentDefender;
             currentDefender = temp;
+
+            round++;
+
         }
 
         determineWinner(hero1, hero2);
